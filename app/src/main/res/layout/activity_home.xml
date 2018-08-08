@@ -6,6 +6,7 @@
     android:layout_height="fill_parent"
     android:fillViewport="true"
     android:orientation="vertical"
+    android:background="@drawable/maindemo1"
 
     >
 
@@ -21,21 +22,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:orientation="horizontal"
         >
 
         <Button
-            android:id="@+id/application_BT"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:background="@drawable/detmis1"/>
+            android:id="@+id/detmis_BT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DETMIS"
+            />
 
         <Button
-            android:id="@+id/screening_BT"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:background="@drawable/detmis"/>
+            android:id="@+id/scheduler_BT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Scheduler"/>
 
     </LinearLayout>
 

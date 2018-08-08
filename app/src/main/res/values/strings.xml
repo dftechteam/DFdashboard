@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">DFChartApp_TestVersion</string>
 
     <string name="invalid_number_of_nicks">Total nicks (%1$d) should be a multiple of major nick interval (%2$d). Scale may be distorted.</string>
     <string name="invalid_min_max_ratio">Sum of min (%1$f) and max (%2$f) should be divisible by 2. Scale may be distorted.</string>
