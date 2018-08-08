@@ -29,7 +29,8 @@
         </activity>
         <activity android:name=".HomeActivity" />
         <activity android:name=".HostelFeesActivity" />
-        <activity android:name=".DETMainActivity"></activity>
+        <activity android:name=".DETMainActivity" />
+        <activity android:name=".DETHRMS_Activity"></activity>
     </application>
 
 </manifest>

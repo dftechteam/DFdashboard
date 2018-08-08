@@ -8,5 +8,8 @@
     <string name="amount_addmission">Admission</string>
     <string name="rupees">Rupees ₹</string>
     <string name="amount_hostel">Hostel</string>
+    <string name="amount_girls">Girls Hostel</string>
+    <string name="amount_boys">Boys Hostel</string>
+
 
 </resources>

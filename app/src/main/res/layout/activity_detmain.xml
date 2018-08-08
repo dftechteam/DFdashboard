@@ -62,6 +62,12 @@
                 android:text="Fees"
                 />
 
+            <Button
+                android:id="@+id/dethrms_BT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HRMS"
+                />
 
                 />
 </LinearLayout>
