@@ -9,7 +9,7 @@ import android.widget.Button;
 public class DETMainActivity extends AppCompatActivity {
 
 
-    Button detfees_bt;
+    Button detfees_bt,scheduler_BT;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -18,15 +18,7 @@ public class DETMainActivity extends AppCompatActivity {
 
 
         detfees_bt =(Button)findViewById(R.id.detfees_BT);
-
-
-
-
-
-
-
-
-
+        scheduler_BT = (Button) findViewById(R.id.scheduler_BT);
 
 
 
@@ -35,6 +27,15 @@ public class DETMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i =new Intent(DETMainActivity.this,HostelFeesActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
+        scheduler_BT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i =new Intent(DETMainActivity.this,ScheduleActivity.class);
                 startActivity(i);
                 finish();
             }
