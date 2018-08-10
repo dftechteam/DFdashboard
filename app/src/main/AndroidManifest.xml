@@ -31,6 +31,8 @@
         <activity android:name=".HostelFeesActivity" />
         <activity android:name=".DETMainActivity"></activity>
         <activity android:name=".ScheduleActivity"/>
+        <activity android:name=".DETOverviewOfCandidates"/>
+
     </application>
 
 </manifest>

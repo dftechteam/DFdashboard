@@ -9,7 +9,7 @@ import android.widget.Button;
 public class DETMainActivity extends AppCompatActivity {
 
 
-    Button detfees_bt,scheduler_BT;
+    Button detfees_bt,scheduler_BT,detmis_bt;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -19,7 +19,7 @@ public class DETMainActivity extends AppCompatActivity {
 
         detfees_bt =(Button)findViewById(R.id.detfees_BT);
         scheduler_BT = (Button) findViewById(R.id.scheduler_BT);
-
+        detmis_bt = (Button) findViewById(R.id.detmis_BT);
 
 
 
@@ -36,6 +36,16 @@ public class DETMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i =new Intent(DETMainActivity.this,ScheduleActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
+
+        detmis_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i =new Intent(DETMainActivity.this,DETOverviewOfCandidates.class);
                 startActivity(i);
                 finish();
             }

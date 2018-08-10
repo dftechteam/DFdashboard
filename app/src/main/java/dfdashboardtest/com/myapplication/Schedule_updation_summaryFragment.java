@@ -38,8 +38,7 @@ import org.ksoap2.transport.HttpTransportSE;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Schedule_updation_summaryFragment extends Fragment implements OnChartValueSelectedListener
-{
+public class Schedule_updation_summaryFragment extends Fragment implements OnChartValueSelectedListener{
 
     int count=0;
     String str_Status=null,str_Engaged_Per=null,str_Not_Engaged_Per=null,str_Not_Updated_Per=null,str_Not_Assigned_Per=null;
@@ -59,6 +58,7 @@ public class Schedule_updation_summaryFragment extends Fragment implements OnCha
         year_spin=(Spinner) view.findViewById(R.id.year_spin);
 
       //  String [] values_sandbox = {"Hubballi","Nizamabad","Nalgonda"};
+       // sandbox_spin.setOnItemSelectedListener();
 
         List<String> values_sandbox = new ArrayList<String>();
         values_sandbox.add("Automobile");
@@ -68,13 +68,13 @@ public class Schedule_updation_summaryFragment extends Fragment implements OnCha
         values_sandbox.add("Personal");
         values_sandbox.add("Travel");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, values_sandbox);
+        ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, values_sandbox);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sandbox_spin.setAdapter(adapter);
 
         String [] values_year = {"2018","2017"};
 
-        ArrayAdapter<String> adapter_year = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, values_year);
+        ArrayAdapter adapter_year = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, values_year);
         adapter_year.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         year_spin.setAdapter(adapter_year);
 
