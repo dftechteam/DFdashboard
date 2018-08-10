@@ -10,10 +10,14 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
@@ -32,6 +36,7 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Schedule_updation_summaryFragment extends Fragment implements OnChartValueSelectedListener
 {
@@ -39,6 +44,8 @@ public class Schedule_updation_summaryFragment extends Fragment implements OnCha
     int count=0;
     String str_Status=null,str_Engaged_Per=null,str_Not_Engaged_Per=null,str_Not_Updated_Per=null,str_Not_Assigned_Per=null;
     PieChart pieChart;
+    Spinner sandbox_spin,year_spin;
+    ArrayAdapter sandboxAdapter,yearAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,6 +54,30 @@ public class Schedule_updation_summaryFragment extends Fragment implements OnCha
 
         GetScheduleSummary getScheduleSummary=new GetScheduleSummary(getActivity());
         getScheduleSummary.execute();
+
+        sandbox_spin=(Spinner) view.findViewById(R.id.sandbox_spin);
+        year_spin=(Spinner) view.findViewById(R.id.year_spin);
+
+      //  String [] values_sandbox = {"Hubballi","Nizamabad","Nalgonda"};
+
+        List<String> values_sandbox = new ArrayList<String>();
+        values_sandbox.add("Automobile");
+        values_sandbox.add("Business Services");
+        values_sandbox.add("Computers");
+        values_sandbox.add("Education");
+        values_sandbox.add("Personal");
+        values_sandbox.add("Travel");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, values_sandbox);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sandbox_spin.setAdapter(adapter);
+
+        String [] values_year = {"2018","2017"};
+
+        ArrayAdapter<String> adapter_year = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, values_year);
+        adapter_year.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        year_spin.setAdapter(adapter_year);
+
 
         pieChart = (PieChart) view.findViewById(R.id.piechart);
         pieChart.setUsePercentValues(true);
@@ -57,6 +88,8 @@ public class Schedule_updation_summaryFragment extends Fragment implements OnCha
         // showActivity();
         return view;
     }
+
+
   /*  @Override
     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
         if (e == null)
