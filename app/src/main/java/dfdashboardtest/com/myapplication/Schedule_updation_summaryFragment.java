@@ -36,6 +36,7 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Schedule_updation_summaryFragment extends Fragment implements OnChartValueSelectedListener{
@@ -45,50 +46,99 @@ public class Schedule_updation_summaryFragment extends Fragment implements OnCha
     PieChart pieChart;
     Spinner sandbox_spin,year_spin;
     ArrayAdapter sandboxAdapter,yearAdapter;
+    private HashMap<String,Integer> mapSandboxCode;
+    String SandboxID,AcademicYear,Email;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view=inflater.inflate(R.layout.frag_schedulesummary_chart, container, false);
 
-        GetScheduleSummary getScheduleSummary=new GetScheduleSummary(getActivity());
-        getScheduleSummary.execute();
-
         sandbox_spin=(Spinner) view.findViewById(R.id.sandbox_spin);
         year_spin=(Spinner) view.findViewById(R.id.year_spin);
+        mapSandboxCode = new HashMap<String,Integer>();
 
-      //  String [] values_sandbox = {"Hubballi","Nizamabad","Nalgonda"};
-       // sandbox_spin.setOnItemSelectedListener();
-
-        List<String> values_sandbox = new ArrayList<String>();
-        values_sandbox.add("Automobile");
-        values_sandbox.add("Business Services");
-        values_sandbox.add("Computers");
-        values_sandbox.add("Education");
-        values_sandbox.add("Personal");
-        values_sandbox.add("Travel");
-
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, values_sandbox);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sandbox_spin.setAdapter(adapter);
-
-        String [] values_year = {"2018","2017"};
-
-        ArrayAdapter adapter_year = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, values_year);
-        adapter_year.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        year_spin.setAdapter(adapter_year);
-
+        initializeSpinnerYear();
+        initializeSpinnerSandbox();
 
         pieChart = (PieChart) view.findViewById(R.id.piechart);
         pieChart.setUsePercentValues(true);
-        
-        Float collegecount_float= Float.valueOf("20").floatValue();
-        Float studentcount_float= Float.valueOf("10").floatValue();
+
+        year_spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                AcademicYear = year_spin.getSelectedItem().toString();
+                SandboxID = sandbox_spin.getSelectedItem().toString();
+
+                if(AcademicYear!="Select Year" && SandboxID!="Select Sandbox"){
+                    GetScheduleSummary getScheduleSummary=new GetScheduleSummary(getActivity());
+                    getScheduleSummary.execute();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+        sandbox_spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                AcademicYear = year_spin.getSelectedItem().toString();
+                SandboxID = sandbox_spin.getSelectedItem().toString();
+
+                if(AcademicYear!="Select Year" && SandboxID!="Select Sandbox"){
+                    GetScheduleSummary getScheduleSummary=new GetScheduleSummary(getActivity());
+                    getScheduleSummary.execute();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         // showActivity();
         return view;
     }
 
+    private void initializeSpinnerSandbox() {
+        final ArrayList<String> listSandbox = new ArrayList<String>();
+
+        listSandbox.add("Select Sandbox");
+        listSandbox.add("Hubballi");
+        listSandbox.add("Nizamabad");
+        listSandbox.add("Nalgonda");
+        listSandbox.add("Cuddapa");
+
+
+        mapSandboxCode.put("Hubballi",1);
+        mapSandboxCode.put("Nizamabad",2);
+        mapSandboxCode.put("Nalgonda",3);
+        mapSandboxCode.put("Cuddapa",4);
+
+        ArrayAdapter dataAdapterListSandbox = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, listSandbox);
+        dataAdapterListSandbox.setDropDownViewResource(R.layout.spinnercustomstyle);
+
+        // attaching data adapter to spinner
+        sandbox_spin.setAdapter(dataAdapterListSandbox);
+    }
+
+    private void initializeSpinnerYear() {
+        final ArrayList<String> listYear = new ArrayList<String>();
+
+        listYear.add("Select Year");
+        listYear.add("2017");
+        listYear.add("2018");
+
+        ArrayAdapter dataAdapterListYear = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, listYear);
+        dataAdapterListYear.setDropDownViewResource(R.layout.spinnercustomstyle);
+
+        year_spin.setAdapter(dataAdapterListYear);
+    }
 
   /*  @Override
     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
@@ -132,7 +182,7 @@ public class Schedule_updation_summaryFragment extends Fragment implements OnCha
             //String str_leadId = (String) params [0];
             //String versionCode = (String) params[2];
 
-            SoapObject response = getThemeWiseProjCount();
+            SoapObject response = getScheduleUpdationSummary();
 
             //Log.d("GetThemeWiseProjCout",response.toString());
 
@@ -253,19 +303,59 @@ public class Schedule_updation_summaryFragment extends Fragment implements OnCha
         ArrayList<PieEntry> yvalues2 = new ArrayList<PieEntry>();
         ArrayList<String> xVals2 = new ArrayList<String>();
 
-        yvalues2.add(new PieEntry(Engaged_Per_float, 0));
-        yvalues2.add(new PieEntry(Not_Engaged_Per_float,1));
-        yvalues2.add(new PieEntry(Not_Updated_Per_float, 2));
-        yvalues2.add(new PieEntry(Not_Assigned_Per_float,3));
+
+        if(Engaged_Per_float!=0) {
+            yvalues2.add(new PieEntry(Engaged_Per_float, "Engaged Class"));
+        }
+        if(Not_Engaged_Per_float!=0) {
+            yvalues2.add(new PieEntry(Not_Engaged_Per_float, "Not Engaged"));
+        }
+        if(Not_Updated_Per_float!=0) {
+            yvalues2.add(new PieEntry(Not_Updated_Per_float, "Not Updated"));
+        }
+        if(Not_Assigned_Per_float!=0) {
+            yvalues2.add(new PieEntry(Not_Assigned_Per_float, "Not Assigned"));
+        }
+
 
         PieDataSet dataSet2 = new PieDataSet(yvalues2, "");
+        pieChart.getDescription().setEnabled(false);
 
         xVals2.add("Engaged Class");
         xVals2.add("Not_Engaged");
         xVals2.add("Not_Updated_Per");
         xVals2.add("Not_Assigned_Per");
 
+        pieChart.setEntryLabelColor(Color.BLACK);
         PieDataSet dataSet = new PieDataSet(yvalues2, "");
+
+        final int[] MY_COLORS = {Color.parseColor("#18F23C"), Color.parseColor("#FF0000"), Color.parseColor("#34DFF2"),
+                Color.parseColor("#f5c700"), Color.rgb(146,208,80), Color.rgb(0,176,80), Color.rgb(79,129,189)};
+        ArrayList<Integer> colors = new ArrayList<Integer>();
+
+        for(int c: MY_COLORS) colors.add(c);
+
+     /*  ArrayList<Integer> colors = new ArrayList<Integer>();
+
+        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.JOYFUL_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.COLORFUL_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.LIBERTY_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.PASTEL_COLORS)
+            colors.add(c);*/
+
+      //  colors.add(ColorTemplate.getHoloBlue());
+
+        dataSet.setColors(colors);
+
         PieData data = new PieData(dataSet);
         // In Percentage term
         data.setValueFormatter(new PercentFormatter());
@@ -276,20 +366,21 @@ public class Schedule_updation_summaryFragment extends Fragment implements OnCha
         pieChart.setDescriptionColor(Color.WHITE);
         pieChart.setDescriptionPosition(450,100);
         pieChart.setDescriptionTextSize(20f);*/
-        pieChart.getLegend().setTextColor(Color.WHITE);
+        pieChart.getLegend().setTextColor(Color.BLACK);
         pieChart.setDrawHoleEnabled(true);
         pieChart.setTransparentCircleRadius(25f);
         pieChart.setHoleRadius(25f);
 
-        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+      //  dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
         data.setValueTextSize(10f);
         data.setValueTextColor(Color.DKGRAY);
+
         // pieChart.setOnChartValueSelectedListener(this);
 
         pieChart.animateXY(1400, 1400);
 
     }
-    private SoapObject getThemeWiseProjCount()
+    private SoapObject getScheduleUpdationSummary()
     {
 
         String METHOD_NAME = "GraphScheduleUpdationSummary";
@@ -298,8 +389,10 @@ public class Schedule_updation_summaryFragment extends Fragment implements OnCha
         try{
             SoapObject request = new SoapObject("http://mis.detedu.org/", METHOD_NAME);
 
-            request.addProperty("SandboxID", "1");
-            request.addProperty("AcademicYear", "2018");
+            int sandboxId = mapSandboxCode.get(SandboxID);
+
+            request.addProperty("SandboxID", String.valueOf(sandboxId));
+            request.addProperty("AcademicYear", AcademicYear);
             request.addProperty("Email", "madhushree.tech@detedu.org");
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);

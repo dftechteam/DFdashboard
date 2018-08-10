@@ -56,6 +56,15 @@ public class DETOverviewOfCandidates extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detoverview_candidates);
 
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.actionbar_layout);
+        // getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.background));
+
+
+        View actionBarView = getSupportActionBar().getCustomView();
+        TextView actionBarTV = (TextView) actionBarView.findViewById(R.id.txt_actionBar);
+        actionBarTV.setText("DET-MIS");
+
         context = DETOverviewOfCandidates.this;
 
         spin_year = (Spinner) findViewById(R.id.spin_year);
@@ -411,17 +420,6 @@ public class DETOverviewOfCandidates extends AppCompatActivity {
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
     private void initializeSpinnerSandbox() {
         final ArrayList<String> listSandbox = new ArrayList<String>();
 
@@ -665,7 +663,13 @@ public class DETOverviewOfCandidates extends AppCompatActivity {
     }
 
 
+    public void onBackPressed()
+    {
+        Intent i = new Intent(DETOverviewOfCandidates.this,HomeActivityNew.class);
+        startActivity(i);
+        finish();
 
+    }
 
 /*    private void initListOfCompletedProjectSpinner() {
         final ArrayList listCompletedProj = new ArrayList();

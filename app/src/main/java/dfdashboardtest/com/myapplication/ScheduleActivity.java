@@ -1,6 +1,7 @@
 package dfdashboardtest.com.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -18,6 +19,15 @@ public class ScheduleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
+
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.actionbar_layout);
+        // getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.background));
+
+
+        View actionBarView = getSupportActionBar().getCustomView();
+        TextView actionBarTV = (TextView) actionBarView.findViewById(R.id.txt_actionBar);
+        actionBarTV.setText("SCHEDULER");
 
         View view1;
         LayoutInflater inflater1 = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -63,5 +73,13 @@ public class ScheduleActivity extends AppCompatActivity {
                 selectedText.setTextColor(Color.parseColor("#000000"));
             }
         });
+    }
+
+    public void onBackPressed()
+    {
+        Intent i = new Intent(ScheduleActivity.this,HomeActivityNew.class);
+        startActivity(i);
+        finish();
+
     }
 }

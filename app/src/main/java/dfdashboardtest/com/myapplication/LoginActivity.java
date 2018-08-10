@@ -24,7 +24,7 @@ public class LoginActivity extends Activity {
         bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(LoginActivity.this,HomeActivity.class);
+                Intent i = new Intent(LoginActivity.this,HomeActivityNew.class);
                 startActivity(i);
 
             }

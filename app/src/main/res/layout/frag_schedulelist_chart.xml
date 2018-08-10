@@ -4,9 +4,93 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/piechart"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+      <!--  <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Year"
+            android:layout_marginLeft="10dp"/>
+        <Spinner
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/spin_year">
+        </Spinner>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="Select Sandbox"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/spin_year"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/spin_sandbox">
+        </Spinner>-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:text="Select SandBox"/>
+            <Spinner
+                android:id="@+id/spin_sandbox"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp">
+            </Spinner>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="Select Year"/>
+            <Spinner
+                android:id="@+id/spin_year"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp">
+            </Spinner>
+        </LinearLayout>
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barchart"
+            android:layout_below="@+id/spin_sandbox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <!--  <com.github.mikephil.charting.charts.HorizontalBarChart
+              android:id="@+id/barchart"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"/>-->
+
+
+    </LinearLayout>
 
 </FrameLayout>
