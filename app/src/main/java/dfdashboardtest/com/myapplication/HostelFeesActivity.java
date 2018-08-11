@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class HostelFeesActivity extends Activity {
+public class HostelFeesActivity extends AppCompatActivity {
 
 
     Gauge gauge1,hostel_gauge2,girlshostel_gauge,boyshostel_gauge;
@@ -15,6 +18,15 @@ public class HostelFeesActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hostelfees);
+
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.actionbar_layout);
+        // getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.background));
+
+
+        View actionBarView = getSupportActionBar().getCustomView();
+        TextView actionBarTV = (TextView) actionBarView.findViewById(R.id.txt_actionBar);
+        actionBarTV.setText("HOSTEL");
 
         gauge1 = findViewById(R.id.gauge1);
         hostel_gauge2 =findViewById(R.id.totalhostel_gauge2);
@@ -72,7 +84,7 @@ public class HostelFeesActivity extends Activity {
 
     public void onBackPressed()
     {
-            Intent i = new Intent(HostelFeesActivity.this,DETMainActivity.class);
+            Intent i = new Intent(HostelFeesActivity.this,HomeActivityNew.class);
             startActivity(i);
             finish();
 
