@@ -11,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-//import android.support.design.widget.TabLayout;
+import android.support.design.widget.TabLayout;
 
 public class DETHRMS_Activity extends Activity {
 
