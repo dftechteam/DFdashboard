@@ -108,7 +108,7 @@ public class Schedule_updation_summaryFragment extends Fragment implements OnCha
     private void initializeSpinnerSandbox() {
         final ArrayList<String> listSandbox = new ArrayList<String>();
 
-        listSandbox.add("Select Sandbox");
+    //    listSandbox.add("Select Sandbox");
         listSandbox.add("Hubballi");
         listSandbox.add("Nizamabad");
         listSandbox.add("Nalgonda");
@@ -130,9 +130,10 @@ public class Schedule_updation_summaryFragment extends Fragment implements OnCha
     private void initializeSpinnerYear() {
         final ArrayList<String> listYear = new ArrayList<String>();
 
-        listYear.add("Select Year");
-        listYear.add("2017");
+      //  listYear.add("Select Year");
         listYear.add("2018");
+        listYear.add("2017");
+
 
         ArrayAdapter dataAdapterListYear = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, listYear);
         dataAdapterListYear.setDropDownViewResource(R.layout.spinnercustomstyle);
@@ -329,8 +330,8 @@ public class Schedule_updation_summaryFragment extends Fragment implements OnCha
         pieChart.setEntryLabelColor(Color.BLACK);
         PieDataSet dataSet = new PieDataSet(yvalues2, "");
 
-        final int[] MY_COLORS = {Color.parseColor("#18F23C"), Color.parseColor("#FF0000"), Color.parseColor("#34DFF2"),
-                Color.parseColor("#f5c700"), Color.rgb(146,208,80), Color.rgb(0,176,80), Color.rgb(79,129,189)};
+        final int[] MY_COLORS = {Color.rgb(144, 193, 51), Color.rgb(198, 53, 53), Color.rgb(243, 200, 61),
+                Color.rgb(45, 170, 165), Color.rgb(146,208,80), Color.rgb(0,176,80), Color.rgb(79,129,189)};
         ArrayList<Integer> colors = new ArrayList<Integer>();
 
         for(int c: MY_COLORS) colors.add(c);

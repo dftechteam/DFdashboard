@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -60,6 +61,7 @@ public class Schedule_UpdationlistFragment extends Fragment implements OnChartVa
     private HashMap<String,Integer> mapSandboxCode;
     private String str_year,str_sandbox;
     private ArrayList<String> arrlstSchedules,arrlstNot_Engaged,arrlstEngaged,arrlstNot_Updated,arrlstNot_Assigned,arrlstDropouts,arrlstFellowship;
+    int[] MY_COLORS;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -239,6 +241,7 @@ public class Schedule_UpdationlistFragment extends Fragment implements OnChartVa
 
 
             initializeOverviewOfGraphs();
+          //  setData();
 
 
 
@@ -433,7 +436,7 @@ public class Schedule_UpdationlistFragment extends Fragment implements OnChartVa
     private void initializeSpinnerSandbox() {
         final ArrayList<String> listSandbox = new ArrayList<String>();
 
-        listSandbox.add("Select Sandbox");
+       // listSandbox.add("Select Sandbox");
         listSandbox.add("Hubballi");
         listSandbox.add("Nizamabad");
         listSandbox.add("Nalgonda");
@@ -473,9 +476,10 @@ public class Schedule_UpdationlistFragment extends Fragment implements OnChartVa
     private void initializeSpinnerYear() {
         final ArrayList<String> listYear = new ArrayList<String>();
 
-        listYear.add("Select Year");
-        listYear.add("2017");
+   //     listYear.add("Select Year");
         listYear.add("2018");
+        listYear.add("2017");
+
 /*        listSandbox.add("Nalgonda");
         listSandbox.add("Cuddapa");*/
 
@@ -556,27 +560,30 @@ public class Schedule_UpdationlistFragment extends Fragment implements OnChartVa
             simpleFloat = new float[arrlstSchedules.size()];
             for(int l=0;l<arrlstSchedules.size();l++) {
                 if(l==0) {
-                    simpleFloat[l] = Float.parseFloat(arrlstSchedules.get(k).toString());
-                    Log.i("tag","arrlstSchedules.get(k)="+arrlstSchedules.get(k).toString());
-                }
-                if(l==1){
                     simpleFloat[l] = Float.parseFloat(arrlstEngaged.get(k).toString());
-                }
-                if(l==2){
+                   /* simpleFloat[l] = Float.parseFloat(arrlstSchedules.get(k).toString());
+                    Log.i("tag","arrlstSchedules.get(k)="+arrlstSchedules.get(k).toString());
+             */   }
+                if(l==1){
                     simpleFloat[l] = Float.parseFloat(arrlstNot_Engaged.get(k).toString());
                 }
-                if(l==3){
+                if(l==2){
                     simpleFloat[l] = Float.parseFloat(arrlstNot_Updated.get(k).toString());
                 }
-                if(l==4){
+                if(l==3){
                     simpleFloat[l] = Float.parseFloat(arrlstNot_Assigned.get(k).toString());
                 }
+              /*  if(l==4){
+
+                }*/
                /* if(l==5){
                     simpleFloat[l] = Float.parseFloat(arrlstDropouts.get(k).toString());
                 }*/
             }
 
             yValues.add(new BarEntry(k, simpleFloat));
+           // yvalues.add(new BarEntry(0,new float[]{DSF[0],DSF[1],DSF[2],DSF[3],DSF[4]}));
+         //   yValues.add(new BarEntry(k,new Float[]{Float.parseFloat(arrlstEngaged.get(k).toString()}))
         }
 
         BarDataSet set1;
@@ -584,8 +591,15 @@ public class Schedule_UpdationlistFragment extends Fragment implements OnChartVa
         set1 = new BarDataSet(yValues,"DET Students Statistics");
         set1.setDrawIcons(false);
         set1.getStackLabels();
-        set1.setStackLabels(new String[]{"Schedules","Engaged","Not Engaged","Not Updated","Not Assigned"});
-        set1.setColors(ColorTemplate.JOYFUL_COLORS);
+        set1.setStackLabels(new String[]{"Engaged","Not Engaged","Not Updated","Not Assigned"});
+
+        MY_COLORS = new int[]{Color.rgb(144, 193, 51), Color.rgb(198, 53, 53), Color.rgb(243, 200, 61), Color.rgb(45, 170, 165)}; //Color.rgb(146,208,80), Color.rgb(0,176,80), Color.rgb(79,129,189)};
+        ArrayList<Integer> colors = new ArrayList<Integer>();
+
+        for(int c: MY_COLORS) colors.add(c);
+
+        set1.setColors(getColors());
+      //  set1.setColors(ColorTemplate.JOYFUL_COLORS);
 
         //set1.setColor(Color.rgb(217, 80, 138));
         //set1.setColors(ColorTemplate.createColors(Color.rgb(255,100,1)));
@@ -597,22 +611,19 @@ public class Schedule_UpdationlistFragment extends Fragment implements OnChartVa
         XAxis xAxisss = mChart.getXAxis();
         xAxisss.setLabelCount(arrlstFellowship.size());
 
-
-
         mChart.getLegend().getFormToTextSpace();
-
+        mChart.getLegend().setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        mChart.getLegend().setFormSize(12);
         mChart.getAxisLeft().setLabelCount(10);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         //yAxisss.setLabelCount();
-
-
-
 
         /*BarData data = new BarData(set1);
         data.setValueFormatter(new DETOverviewMyValueFormatter());*/
 
         BarData data = new BarData(set1);
-        data.setValueFormatter(new DETOverviewMyValueFormatter());
-
+      //  data.setValueFormatter(new DETOverviewMyValueFormatter());
+        data.setValueFormatter(new MyValueFormatter());
         mChart.setDrawValueAboveBar(false);
 
 
@@ -630,6 +641,157 @@ public class Schedule_UpdationlistFragment extends Fragment implements OnChartVa
         mChart.setHighlightPerTapEnabled(false);
     }
 
+    private void setData() {
+
+        mChart.setMaxVisibleValueCount(200);
+
+
+        ArrayList<BarEntry> yValues = new ArrayList<>();
+
+        ArrayList<String> xVals = new ArrayList<>();
+
+     /*   xVals.add("DKF");
+        xVals.add("DSF");
+        xVals.add("KFP");
+        xVals.add("DCF");
+        xVals.add("SEF");
+        xVals.add("USP");
+        xVals.add("DIT");
+        xVals.add("CNC");
+        xVals.add("ATP");
+        xVals.add("DFP");
+        xVals.add("SKC");
+        xVals.add("DWP");
+        xVals.add("DAT");
+        xVals.add("DKM");
+        xVals.add("HRM");
+        xVals.add("SVP");*/
+
+        XAxis xAxis = mChart.getXAxis();
+
+
+        //mChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xVals));
+        mChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(arrlstFellowship));
+
+
+    //    mChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xVals));
+
+       /* for(int i=0;i<count;i++){
+            float val1 = (float) (Math.random() * count) + 20;
+            float val2 = (float) (Math.random() * count) + 20;
+            float val3 = (float) (Math.random() * count) + 20;
+
+            yValues.add(new BarEntry(i,new float[]{val1,val2,val3}));
+        }*/
+
+       /* yValues.add(new BarEntry(0, new float[] {205,801,471,414,153}));
+        yValues.add(new BarEntry(1, new float[] {984,448,179,133}));
+        yValues.add(new BarEntry(2, new float[] {787, 138}));
+        yValues.add(new BarEntry(3, new float[] {498,191}));
+        yValues.add(new BarEntry(4, new float[] {440,192,174}));
+        yValues.add(new BarEntry(5, new float[] {394,221}));
+        yValues.add(new BarEntry(6, new float[] {388,134}));
+        yValues.add(new BarEntry(7, new float[] {357,159}));
+        yValues.add(new BarEntry(8, new float[] {291,153}));
+        yValues.add(new BarEntry(9, new float[] {246,128}));*/
+
+
+        float[] simpleFloat;
+        for(int k=0;k<arrlstSchedules.size();k++) {
+            simpleFloat = new float[arrlstSchedules.size()];
+            for (int l = 0; l < arrlstSchedules.size(); l++) {
+                if (l == 0) {
+                    simpleFloat[l] = Float.parseFloat(arrlstEngaged.get(k).toString());
+                   /* simpleFloat[l] = Float.parseFloat(arrlstSchedules.get(k).toString());
+                    Log.i("tag","arrlstSchedules.get(k)="+arrlstSchedules.get(k).toString());
+             */
+                }
+                if (l == 1) {
+                    simpleFloat[l] = Float.parseFloat(arrlstNot_Engaged.get(k).toString());
+                }
+                if (l == 2) {
+                    simpleFloat[l] = Float.parseFloat(arrlstNot_Updated.get(k).toString());
+                }
+                if (l == 3) {
+                    simpleFloat[l] = Float.parseFloat(arrlstNot_Assigned.get(k).toString());
+                }
+              /*  if(l==4){
+
+                }*/
+               /* if(l==5){
+                    simpleFloat[l] = Float.parseFloat(arrlstDropouts.get(k).toString());
+                }*/
+            }
+            yValues.add(new BarEntry(k, simpleFloat));
+
+        }
+
+        BarDataSet set1;
+
+        set1 = new BarDataSet(yValues,"DET Students Statistics");
+        set1.setDrawIcons(false);
+        //   set1.setStackLabels(new String[]{"Applications","Admission","Joinee","Certified","Dropouts","Placed","Waiting","Rejected"});
+        set1.setStackLabels(new String[]{"Not Updated","Not Engaged","Engaged","Unassigned","Schedules"});
+        set1.setColors(getColors());
+
+        //set1.setColor(Color.rgb(217, 80, 138));
+        //set1.setColors(ColorTemplate.createColors(Color.rgb(255,100,1)));
+
+
+        mChart.getAxisLeft().setAxisMaximum(2400);
+        mChart.getAxisLeft().setLabelCount(100);
+
+       /*   mChart.getAxisRight().setAxisMaximum(5000);
+        mChart.getAxisRight().setLabelCount(1000);*/
+
+        XAxis xAxisss = mChart.getXAxis();
+        xAxisss.setLabelCount(10);
+
+
+
+
+        mChart.getAxisLeft().setLabelCount(5);
+        //yAxisss.setLabelCount();
+
+
+
+
+        /*BarData data = new BarData(set1);
+        data.setValueFormatter(new MyValueFormatter());*/
+
+        BarData data = new BarData(set1);
+        data.setValueFormatter(new MyValueFormatter());
+
+        mChart.setDrawValueAboveBar(false);
+
+
+        mChart.setData(data);
+        mChart.setFitBars(true);
+        mChart.invalidate();
+        mChart.getDescription().setEnabled(false);
+
+
+
+        mChart.setClickable(false);
+        mChart.setEnabled(false);
+        mChart.setDrawBarShadow(false);
+        mChart.getData().setHighlightEnabled(false);
+        mChart.setHighlightPerTapEnabled(false);
+    }
+    private int[] getColors() {
+
+        int stacksize = 4;
+
+        // have as many colors as stack-values per entry
+        int[] colors = new int[stacksize];
+
+        for (int i = 0; i < colors.length; i++) {
+           colors[i] = ColorTemplate.COLORFUL_COLORS[i];
+           // colors[i]=MY_COLORS[i];
+        }
+
+        return colors;
+    }
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {
